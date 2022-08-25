@@ -1,12 +1,12 @@
 <?php
 namespace DoctrineDataFixtureTest\TestAsset\Fixtures\HasSL;
 
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\DataFixtures\FixtureInterface;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
-class FixtureA implements FixtureInterface, ServiceLocatorAwareInterface
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Common\DataFixtures\FixtureInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+
+class FixtureA implements FixtureInterface
 {
     /**
      * @var ServiceLocatorInterface

@@ -19,9 +19,9 @@
 namespace DoctrineDataFixtureModule\Loader;
 
 use Doctrine\Common\DataFixtures\Loader as BaseLoader;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 use Doctrine\Common\DataFixtures\FixtureInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Doctrine fixture loader which is ZF2 Service Locator-aware
@@ -50,7 +50,7 @@ class ServiceLocatorAwareLoader extends BaseLoader
      */
     public function addFixture(FixtureInterface $fixture)
     {
-        if ($fixture instanceof ServiceLocatorAwareInterface) {
+        if ($fixture instanceof ServiceManager) {
             $fixture->setServiceLocator($this->serviceLocator);
         }
         parent::addFixture($fixture);
