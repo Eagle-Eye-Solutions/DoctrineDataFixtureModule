@@ -2,7 +2,7 @@
 
 namespace DoctrineDataFixtureModule;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * Class ContainerAwareTrait
@@ -11,7 +11,7 @@ use Interop\Container\ContainerInterface;
 trait ContainerAwareTrait
 {
     /**
-     * @var \Interop\Container\ContainerInterface
+     * @var \Psr\Container\ContainerInterface
      */
     protected $container;
 

@@ -4,7 +4,7 @@ namespace DoctrineDataFixtureModule\Loader;
 
 use Doctrine\Common\DataFixtures\Loader;
 use DoctrineDataFixtureModule\ContainerAwareInterface;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 
 /**

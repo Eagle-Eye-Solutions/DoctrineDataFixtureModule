@@ -19,7 +19,7 @@
 
 namespace DoctrineDataFixtureModule\Service;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
@@ -38,10 +38,10 @@ class FixtureFactory implements FactoryInterface
      * @param array|null $options
      * @return Fixture
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         $options = $this->getOptions($container, 'fixtures');
-        
+
         return $options;
     }
 
@@ -60,7 +60,7 @@ class FixtureFactory implements FactoryInterface
         if (!isset($options['doctrine']['fixture'])) {
             return array();
         }
-        
+
         return $options['doctrine']['fixture'];
     }
 }

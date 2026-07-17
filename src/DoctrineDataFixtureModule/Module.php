@@ -54,7 +54,7 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface
         /* @var \Symfony\Component\Console\Application $application */
         $application = $event->getTarget();
 
-        /* @var \Interop\Container\ContainerInterface $container */
+        /* @var \Psr\Container\ContainerInterface $container */
         $container = $event->getParam('ServiceManager');
         $fixturesLoadCommand = new FixturesLoadCommand($container);
         $application->add($fixturesLoadCommand);
