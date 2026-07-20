@@ -12,22 +12,10 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use DoctrineDataFixtureModule\Loader\DataFixturesLoader;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
-/**
- * Class FixturesLoadCommand
- * @package DoctrineDataFixtureModule\Command
- */
 class FixturesLoadCommand extends Command
 {
-    /**
-     * @var \Psr\Container\ContainerInterface
-     */
-    private $container;
+    private ContainerInterface $container;
 
-    /**
-     * FixturesLoadCommand constructor.
-     *
-     * @param ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         parent::__construct();
@@ -66,11 +54,11 @@ EOT
      * @param InputInterface  $input
      * @param OutputInterface $output
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($input->isInteractive() && !$input->getOption('append')) {
             if (!$this->askConfirmation($input, $output, '<question>Careful, database will be purged. Do you want to continue y/N ?</question>', false)) {
-                return;
+                return 0;
             }
         }
 

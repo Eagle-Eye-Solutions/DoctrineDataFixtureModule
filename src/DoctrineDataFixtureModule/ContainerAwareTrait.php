@@ -4,10 +4,6 @@ namespace DoctrineDataFixtureModule;
 
 use Psr\Container\ContainerInterface;
 
-/**
- * Class ContainerAwareTrait
- * @package DoctrineDataFixtureModule
- */
 trait ContainerAwareTrait
 {
     /**
