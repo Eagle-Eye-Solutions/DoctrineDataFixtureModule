@@ -58,7 +58,7 @@ EOT
     {
         if ($input->isInteractive() && !$input->getOption('append')) {
             if (!$this->askConfirmation($input, $output, '<question>Careful, database will be purged. Do you want to continue y/N ?</question>', false)) {
-                return 0;
+                return Command::SUCCESS;
             }
         }
 
@@ -84,7 +84,7 @@ EOT
             }
         });
         $executor->execute($loader->getFixtures(), $input->getOption('append'));
-        return 1;
+        return Command::SUCCESS;
     }
 
     /**
