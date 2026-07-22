@@ -73,8 +73,15 @@ EOT
         }
 
         $executor = new ORMExecutor($em, $purger);
-        $executor->setLogger(function ($message) use ($output) {
-            $output->writeln(sprintf('  <comment>></comment> <info>%s</info>', $message));
+        $executor->setLogger(new class ($output) extends \Psr\Log\AbstractLogger {
+            public function __construct(private OutputInterface $output)
+            {
+            }
+
+            public function log($level, $message, array $context = []): void
+            {
+                $this->output->writeln(sprintf('  <comment>></comment> <info>%s</info>', $message));
+            }
         });
         $executor->execute($loader->getFixtures(), $input->getOption('append'));
         return 1;
