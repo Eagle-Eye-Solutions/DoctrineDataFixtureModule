@@ -2,7 +2,7 @@
 
 namespace DoctrineDataFixtureModule\Command;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -12,22 +12,10 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use DoctrineDataFixtureModule\Loader\DataFixturesLoader;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
-/**
- * Class FixturesLoadCommand
- * @package DoctrineDataFixtureModule\Command
- */
 class FixturesLoadCommand extends Command
 {
-    /**
-     * @var \Interop\Container\ContainerInterface
-     */
-    private $container;
+    private ContainerInterface $container;
 
-    /**
-     * FixturesLoadCommand constructor.
-     *
-     * @param ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         parent::__construct();
@@ -66,11 +54,11 @@ EOT
      * @param InputInterface  $input
      * @param OutputInterface $output
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($input->isInteractive() && !$input->getOption('append')) {
             if (!$this->askConfirmation($input, $output, '<question>Careful, database will be purged. Do you want to continue y/N ?</question>', false)) {
-                return;
+                return Command::SUCCESS;
             }
         }
 
@@ -85,11 +73,18 @@ EOT
         }
 
         $executor = new ORMExecutor($em, $purger);
-        $executor->setLogger(function ($message) use ($output) {
-            $output->writeln(sprintf('  <comment>></comment> <info>%s</info>', $message));
+        $executor->setLogger(new class ($output) extends \Psr\Log\AbstractLogger {
+            public function __construct(private OutputInterface $output)
+            {
+            }
+
+            public function log($level, $message, array $context = []): void
+            {
+                $this->output->writeln(sprintf('  <comment>></comment> <info>%s</info>', $message));
+            }
         });
         $executor->execute($loader->getFixtures(), $input->getOption('append'));
-        return 1;
+        return Command::SUCCESS;
     }
 
     /**
