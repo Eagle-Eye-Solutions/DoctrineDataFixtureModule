@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": ">=8.2",
+        "php": "^8.2.35",
         "doctrine/data-fixtures": "^2.2.0",
         "doctrine/doctrine-orm-module": "^4.0 || ^6.0",
         "laminas/laminas-modulemanager": "~2.0",
